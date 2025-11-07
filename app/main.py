@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-import logging
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from uvicorn import run
 
+from app.api.v1 import health, users
 from app.core.config import settings
 from app.core.logging import init_logging
-from app.core.security_headers import SecurityHeadersMiddleware
 from app.core.rate_limit import RateLimitMiddleware
-from app.api.v1 import health, users
+from app.core.security_headers import SecurityHeadersMiddleware
 
 init_logging(level=settings.LOG_LEVEL)
 
@@ -38,3 +38,6 @@ def healthz() -> dict[str, str]:
 async def readyz() -> dict[str, str]:
     # TODO: Add deeper checks (DB, cache, etc.)
     return {"status": "ready"}
+
+if __name__ == "__main__":
+    run(app, host="0.0.0.0", port=8000, reload=False)

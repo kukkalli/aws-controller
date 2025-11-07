@@ -1,0 +1,14 @@
+### Health
+GET http://127.0.0.1:8000/healthz
+
+### Create user
+POST http://127.0.0.1:8000/v1/users
+content-type: application/json
+
+{
+  "email": "alice@example.com",
+  "full_name": "Alice"
+}
+
+### List users
+GET http://127.0.0.1:8000/v1/users
